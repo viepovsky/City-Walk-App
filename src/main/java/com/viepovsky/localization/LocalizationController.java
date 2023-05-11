@@ -1,5 +1,7 @@
 package com.viepovsky.localization;
 
+import com.viepovsky.localization.dto.CityResponse;
+import com.viepovsky.localization.dto.CountryResponse;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,24 +18,23 @@ import java.util.List;
 @RequestMapping(path = "/city-weather-app/localization")
 @Validated
 class LocalizationController {
-    private final CountryService countryService;
-    private final CityService cityService;
+    private final LocalizationFacade facade;
 
     @GetMapping("/countries")
-    ResponseEntity<List<Country>> getCountries() {
-        return ResponseEntity.ok(countryService.getAll());
+    ResponseEntity<List<CountryResponse>> getCountries() {
+        return ResponseEntity.ok(facade.getCountries());
     }
 
     @GetMapping("/cities")
-    ResponseEntity<List<City>> getCities(@RequestParam(name = "country-code") @NotBlank String code) {
-        return ResponseEntity.ok(cityService.getByCode(code));
+    ResponseEntity<List<CityResponse>> getCities(@RequestParam(name = "country-code") @NotBlank String code) {
+        return ResponseEntity.ok(facade.getCities(code));
     }
 
     @GetMapping("/city")
-    ResponseEntity<City> getCity(
+    ResponseEntity<CityResponse> getCity(
             @RequestParam(name = "country-code") @NotBlank String code,
-            @RequestParam(name = "city") @NotBlank String city
+            @RequestParam(name = "city") @NotBlank String name
     ) {
-        return ResponseEntity.ok(cityService.getCity(code, city));
+        return ResponseEntity.ok(facade.getCity(code, name));
     }
 }

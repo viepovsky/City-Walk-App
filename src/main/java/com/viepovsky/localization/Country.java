@@ -1,12 +1,12 @@
 package com.viepovsky.localization;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 class Country {
     private String name;
     private String code;

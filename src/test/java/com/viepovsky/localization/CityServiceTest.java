@@ -30,18 +30,11 @@ class CityServiceTest {
     }
 
     @Test
-    void should_get_latitude() {
-        String latitude = service.getCity("PL", "Poznań").getLatitude();
+    void should_get_city() {
+        var city = service.getCity("PL", "Poznań");
 
-        assertNotNull(latitude);
-        assertEquals("52.40692", latitude);
-    }
-
-    @Test
-    void should_get_longitude() {
-        String longitude = service.getCity("PL", "Poznań").getLongitude();
-
-        assertNotNull(longitude);
-        assertEquals("16.92993", longitude);
+        assertNotNull(city);
+        assertEquals("52.40692", city.getLatitude());
+        assertEquals("16.92993", city.getLongitude());
     }
 }

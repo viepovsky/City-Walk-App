@@ -1,5 +1,7 @@
 package com.viepovsky.localization;
 
+import com.viepovsky.localization.dto.CityResponse;
+import com.viepovsky.localization.dto.CountryResponse;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -23,15 +25,12 @@ class LocalizationControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private CountryService countryService;
-
-    @MockBean
-    private CityService cityService;
+    private LocalizationFacade facade;
 
     @Test
     void should_get_countries() throws Exception {
-        List<Country> countries = List.of(new Country());
-        when(countryService.getAll()).thenReturn(countries);
+        List<CountryResponse> countryResponses = List.of(new CountryResponse());
+        when(facade.getCountries()).thenReturn(countryResponses);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/city-weather-app/localization/countries"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -40,8 +39,8 @@ class LocalizationControllerTest {
 
     @Test
     void should_get_cities_for_given_country_code() throws Exception {
-        List<City> cities = List.of(new City());
-        when(cityService.getByCode(anyString())).thenReturn(cities);
+        List<CityResponse> cityResponses = List.of(new CityResponse());
+        when(facade.getCities(anyString())).thenReturn(cityResponses);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/city-weather-app/localization/cities")
                         .param("country-code", "PL"))
@@ -51,8 +50,8 @@ class LocalizationControllerTest {
 
     @Test
     void should_get_city_for_given_country_code_and_city() throws Exception {
-        City city = new City();
-        when(cityService.getCity(anyString(), anyString())).thenReturn(city);
+        var city = new CityResponse();
+        when(facade.getCity(anyString(), anyString())).thenReturn(city);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/city-weather-app/localization/city")
                         .param("country-code", "PL")
