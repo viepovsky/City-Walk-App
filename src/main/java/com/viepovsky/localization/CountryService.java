@@ -15,7 +15,7 @@ import java.util.List;
 class CountryService {
     private static final Logger logger = LoggerFactory.getLogger(CountryService.class);
 
-    List<Country> getAllCountries() throws IOException {
+    List<Country> getAll() {
         var mapper = new ObjectMapper();
         List<Country> countries = new ArrayList<>();
         try {

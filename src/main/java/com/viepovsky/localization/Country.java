@@ -8,8 +8,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-public class Country {
+class Country {
     private String name;
     private String code;
 }

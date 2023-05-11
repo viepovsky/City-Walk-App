@@ -12,11 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CountryServiceTest {
-    private final CountryService countryService = new CountryService();
+    private final CountryService service = new CountryService();
 
     @Test
     void should_get_countries() throws IOException {
-        List<Country> countries = countryService.getAllCountries();
+        List<Country> countries = service.getAll();
 
         assertNotNull(countries);
         assertEquals(240, countries.size());
@@ -24,7 +24,7 @@ class CountryServiceTest {
 
     @Test
     void should_get_correct_country_code_from_countries_list() throws IOException {
-        List<Country> countries = countryService.getAllCountries();
+        List<Country> countries = service.getAll();
         var country = countries.stream().filter(n -> n.getName().equals("Poland")).findFirst().orElse(null);
 
         assertNotNull(country);
