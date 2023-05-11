@@ -6,11 +6,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CityServiceTest {
-    private final CityService service = new CityService();
+    private final CityService service = CityService.getInstance();
 
     @Test
     void should_get_cities() {
@@ -30,7 +31,7 @@ class CityServiceTest {
 
     @Test
     void should_get_latitude() {
-        String latitude = service.getLatitude("Poznań");
+        String latitude = service.getCity("PL", "Poznań").getLatitude();
 
         assertNotNull(latitude);
         assertEquals("52.40692", latitude);
@@ -38,7 +39,7 @@ class CityServiceTest {
 
     @Test
     void should_get_longitude() {
-        String longitude = service.getLongitude("Poznań");
+        String longitude = service.getCity("PL", "Poznań").getLongitude();
 
         assertNotNull(longitude);
         assertEquals("16.92993", longitude);

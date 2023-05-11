@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CountryServiceTest {
-    private final CountryService service = new CountryService();
+    private final CountryService service = CountryService.getInstance();
 
     @Test
     void should_get_countries() throws IOException {

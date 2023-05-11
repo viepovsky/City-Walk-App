@@ -4,12 +4,22 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.List;
+
 @Service
 class CityService extends BaseCityService {
     private static final String CITIES_JSON_PATH = "src/main/resources/cities.json";
+    private static CityService instance = null;
     private List<City> cities;
-    CityService() {
+
+    private CityService() {
         init();
+    }
+
+    static CityService getInstance() {
+        if (instance == null) {
+            instance = new CityService();
+        }
+        return instance;
     }
 
     List<City> getAll() {
@@ -20,18 +30,12 @@ class CityService extends BaseCityService {
         return super.filterByCode(code, cities);
     }
 
-    String getLatitude(String cityName) {
-        var city = super.filterByName(cityName, cities);
-        return city.getLatitude();
-    }
-
-    String getLongitude(String cityName) {
-        var city = super.filterByName(cityName, cities);
-        return city.getLongitude();
+    City getCity(String code, String cityName) {
+        return super.filterByCodeAndName(code, cityName, cities);
     }
 
     private void init() {
         var file = new File(CITIES_JSON_PATH);
-        cities = super.getAll(file);
+        cities = super.loadFromJson(file);
     }
 }

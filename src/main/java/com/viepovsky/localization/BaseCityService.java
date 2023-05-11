@@ -15,7 +15,7 @@ import java.util.List;
 abstract class BaseCityService {
     private static final Logger logger = LoggerFactory.getLogger(BaseCityService.class);
 
-    List<City> getAll(File file) {
+    List<City> loadFromJson(File file) {
         List<City> cities = new ArrayList<>();
         var mapper = new ObjectMapper();
         try {
@@ -33,8 +33,8 @@ abstract class BaseCityService {
                 .toList();
     }
 
-    City filterByName(String name, List<City> cities) {
-        return cities.stream()
+    City filterByCodeAndName(String code, String name, List<City> cities) {
+        return filterByCode(code, cities).stream()
                 .filter(city -> city.getName().equals(name))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
