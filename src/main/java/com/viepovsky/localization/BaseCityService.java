@@ -1,6 +1,7 @@
 package com.viepovsky.localization;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.viepovsky.exceptions.WrongArgumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,6 @@ abstract class BaseCityService {
         return filterByCode(code, cities).stream()
                 .filter(city -> city.getName().equals(name))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new WrongArgumentException("Given city name does not exist."));
     }
 }

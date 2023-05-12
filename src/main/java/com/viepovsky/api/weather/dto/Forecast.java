@@ -16,7 +16,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Forecast {
     @JsonProperty("current")
-    private Weather currentWeather;
+    private CurrentWeather currentWeather;
     @JsonProperty("forecast")
-    private List<Weather> forecastWeathers;
+    private List<ForecastWeather> forecastWeathers;
 }

@@ -1,6 +1,6 @@
 package com.viepovsky.api.weather;
 
-import com.viepovsky.api.weather.dto.Weather;
+import com.viepovsky.api.weather.dto.CurrentWeather;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ class WeatherController {
     private final WeatherService service;
 
     @GetMapping
-    ResponseEntity<Weather> getWeather(
+    ResponseEntity<CurrentWeather> getWeather(
             @RequestParam(name = "country-code") @NotBlank String code,
             @RequestParam(name = "city") @NotBlank String name
     ) {

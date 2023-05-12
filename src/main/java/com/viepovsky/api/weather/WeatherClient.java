@@ -20,17 +20,24 @@ class WeatherClient {
     private final RestTemplate restTemplate;
 
     Forecast fetchCurrentWeather(String longitude, String latitude) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("X-RapidAPI-Key", config.getWeatherApiKey());
-        headers.set("X-RapidAPI-Host", config.getWeatherApiHost());
-        HttpEntity<String> request = new HttpEntity<>(headers);
+        HttpEntity<String> request = buildRequestEntityHeaders();
+
         URI url = UriComponentsBuilder
                 .fromHttpUrl(config.getWeatherApiEndpoint() + "/current/" + longitude + ", " + latitude)
                 .queryParam("tempunit", "C")
                 .queryParam("windunit", "KMH")
                 .build()
                 .toUri();
+
         ResponseEntity<Forecast> response = restTemplate.exchange(url, HttpMethod.GET, request, Forecast.class);
         return Optional.ofNullable(response.getBody()).orElse(new Forecast());
     }
+    
+    private HttpEntity<String> buildRequestEntityHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-RapidAPI-Key", config.getWeatherApiKey());
+        headers.set("X-RapidAPI-Host", config.getWeatherApiHost());
+        return new HttpEntity<>(headers);
+    }
+    
 }

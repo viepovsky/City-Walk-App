@@ -11,13 +11,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Weather {
+public class CurrentWeather {
     private String symbol;
     private String symbolPhrase;
     private int temperature;
     private int feelsLikeTemp;
     private int dewPoint;
-    private String windDirString;
     private int windSpeed;
     private int uvIndex;
     private double pressure;
