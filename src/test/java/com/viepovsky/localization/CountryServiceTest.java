@@ -15,7 +15,7 @@ class CountryServiceTest {
     private final CountryService service = CountryService.getInstance();
 
     @Test
-    void should_get_countries() throws IOException {
+    void should_get_countries() {
         List<Country> countries = service.getAll();
 
         assertNotNull(countries);
@@ -23,7 +23,7 @@ class CountryServiceTest {
     }
 
     @Test
-    void should_get_correct_country_code_from_countries_list() throws IOException {
+    void should_get_correct_country_code_from_countries_list() {
         List<Country> countries = service.getAll();
         var country = countries.stream().filter(n -> n.getName().equals("Poland")).findFirst().orElse(null);
 
