@@ -2,9 +2,11 @@ package com.viepovsky.localization;
 
 import com.viepovsky.localization.dto.CityResponse;
 import com.viepovsky.localization.dto.CountryResponse;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 class Mapper {
     CountryResponse mapToCountryResponse(Country country) {
         return new CountryResponse(
