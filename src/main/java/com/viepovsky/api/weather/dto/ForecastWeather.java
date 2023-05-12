@@ -6,12 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ForecastWeather {
+    private LocalDate date;
     private String symbol;
     private String symbolPhrase;
     private int maxTemp;
