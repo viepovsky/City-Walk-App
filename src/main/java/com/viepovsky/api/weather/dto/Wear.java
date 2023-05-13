@@ -9,9 +9,11 @@ public class Wear {
     private UpperBody upperBody;
     private LowerBody lowerBody;
     private Foot foot;
+    private Rain rain;
 
     public Wear(TemperatureScale scale) {
         this.scale = scale;
+        this.rain = Rain.NO;
         switch (scale) {
             case SCORCHING_HOT, HOT -> setWear(Head.SUN_HAT, UpperBody.T_SHIRT, LowerBody.SHORTS, Foot.SANDALS);
             case WARM -> setWear(Head.NONE, UpperBody.T_SHIRT, LowerBody.SHORTS, Foot.SNEAKERS);
@@ -21,6 +23,16 @@ public class Wear {
             case COLD -> setWear(Head.BEANIE, UpperBody.LIGHT_JACKET, LowerBody.JEANS, Foot.SNEAKERS);
             case FREEZING -> setWear(Head.BEANIE, UpperBody.WINTER_JACKET, LowerBody.WINTER_PANTS, Foot.WINTER_BOOTS);
         }
+    }
+
+    public void setRainAndRainClothes() {
+        this.rain = Rain.YES;
+        head = Head.RAIN_HAT;
+        upperBody = UpperBody.RAIN_JACKET;
+    }
+
+    public void setPossibleRain() {
+        this.rain = Rain.POSSIBLE;
     }
 
     private void setWear(Head head, UpperBody upperBody, LowerBody lowerBody, Foot foot) {
@@ -43,14 +55,15 @@ public class Wear {
 
     public enum Head {
         BEANIE,
-        NONE,
-        SUN_HAT
+        RAIN_HAT,
+        SUN_HAT,
+        NONE
     }
 
     public enum UpperBody {
-        HEAVY_COAT,
         WINTER_JACKET,
         LIGHT_JACKET,
+        RAIN_JACKET,
         SWEATER,
         SHIRT,
         T_SHIRT
@@ -66,5 +79,11 @@ public class Wear {
         WINTER_BOOTS,
         SNEAKERS,
         SANDALS
+    }
+
+    public enum Rain {
+        YES,
+        POSSIBLE,
+        NO
     }
 }

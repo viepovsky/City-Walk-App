@@ -73,16 +73,16 @@ class WeatherService {
                 .findFirst()
                 .get();
         Wear comfortableWear;
-        int feelsLikeTemp = weather.getMaxFeelsLikeTemp() + weather.getMinFeelsLikeTemp() / 2;
+        int feelsLikeTemp = (int) Math.round(weather.getMaxTemp() * 0.75 + weather.getMinTemp() * 0.25);
         if (feelsLikeTemp >= 40) {
             comfortableWear = new Wear(Wear.TemperatureScale.SCORCHING_HOT);
         } else if (feelsLikeTemp >= 30) {
             comfortableWear = new Wear(Wear.TemperatureScale.HOT);
         } else if (feelsLikeTemp >= 23) {
             comfortableWear = new Wear(Wear.TemperatureScale.WARM);
-        } else if (feelsLikeTemp >= 18) {
+        } else if (feelsLikeTemp >= 17) {
             comfortableWear = new Wear(Wear.TemperatureScale.MODERATE);
-        } else if (feelsLikeTemp >= 15) {
+        } else if (feelsLikeTemp >= 13) {
             comfortableWear = new Wear(Wear.TemperatureScale.COOL);
         } else if (feelsLikeTemp >= 8) {
             comfortableWear = new Wear(Wear.TemperatureScale.CHILLY);
@@ -90,6 +90,11 @@ class WeatherService {
             comfortableWear = new Wear(Wear.TemperatureScale.COLD);
         } else {
             comfortableWear = new Wear(Wear.TemperatureScale.FREEZING);
+        }
+        if (weather.getPrecipationAccumulated() >= 0.5 && weather.getPrecipationPropability() > 60) {
+            comfortableWear.setRainAndRainClothes();
+        } else if (weather.getPrecipationAccumulated() >= 0.1 && weather.getPrecipationPropability() > 20) {
+            comfortableWear.setPossibleRain();
         }
         return comfortableWear;
     }
