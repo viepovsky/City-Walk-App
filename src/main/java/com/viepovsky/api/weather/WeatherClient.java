@@ -16,8 +16,8 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 class WeatherClient {
-    private final WeatherConfig config;
     private final RestTemplate restTemplate;
+    private final WeatherConfig config;
 
     Forecast fetchCurrentWeather(String longitude, String latitude) {
         HttpEntity<String> request = buildRequestEntityHeaders();
