@@ -4,17 +4,17 @@ import lombok.Getter;
 
 @Getter
 public class Wear {
-    private final TemperatureScale scale;
+    private final WeatherDescription weatherDesc;
     private Head head;
     private UpperBody upperBody;
     private LowerBody lowerBody;
     private Foot foot;
     private Rain rain;
 
-    public Wear(TemperatureScale scale) {
-        this.scale = scale;
+    public Wear(WeatherDescription weatherDesc) {
+        this.weatherDesc = weatherDesc;
         this.rain = Rain.NO;
-        switch (scale) {
+        switch (weatherDesc) {
             case SCORCHING_HOT, HOT -> setWear(Head.SUN_HAT, UpperBody.T_SHIRT, LowerBody.SHORTS, Foot.SANDALS);
             case WARM -> setWear(Head.NONE, UpperBody.T_SHIRT, LowerBody.SHORTS, Foot.SNEAKERS);
             case MODERATE -> setWear(Head.NONE, UpperBody.T_SHIRT, LowerBody.JEANS, Foot.SNEAKERS);
@@ -42,7 +42,7 @@ public class Wear {
         this.foot = foot;
     }
 
-    public enum TemperatureScale {
+    public enum WeatherDescription {
         SCORCHING_HOT,
         HOT,
         WARM,

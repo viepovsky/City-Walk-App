@@ -44,7 +44,7 @@ class RecommendationControllerTest {
 
     @Test
     void should_get_wear_recommendation() throws Exception {
-        Wear wearRecommendation = new Wear(Wear.TemperatureScale.SCORCHING_HOT);
+        Wear wearRecommendation = new Wear(Wear.WeatherDescription.SCORCHING_HOT);
         when(service.getWearRecommendation(any(), anyString(), anyString())).thenReturn(wearRecommendation);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/city-weather-app/recommendation/wear")
@@ -57,7 +57,7 @@ class RecommendationControllerTest {
 
     @Test
     void should_not_get_wear_recommendation_if_invalid_params() throws Exception {
-        Wear wearRecommendation = new Wear(Wear.TemperatureScale.SCORCHING_HOT);
+        Wear wearRecommendation = new Wear(Wear.WeatherDescription.SCORCHING_HOT);
         when(service.getWearRecommendation(any(), anyString(), anyString())).thenReturn(wearRecommendation);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/city-weather-app/recommendation/wear")

@@ -125,21 +125,21 @@ public class RecommendationService {
         int feelsLikeTemp = (int) Math.round(weather.getMaxTemp() * 0.75 + weather.getMinTemp() * 0.25);
         Wear comfortableWear;
         if (feelsLikeTemp >= 40) {
-            comfortableWear = new Wear(Wear.TemperatureScale.SCORCHING_HOT);
+            comfortableWear = new Wear(Wear.WeatherDescription.SCORCHING_HOT);
         } else if (feelsLikeTemp >= 30) {
-            comfortableWear = new Wear(Wear.TemperatureScale.HOT);
+            comfortableWear = new Wear(Wear.WeatherDescription.HOT);
         } else if (feelsLikeTemp >= 23) {
-            comfortableWear = new Wear(Wear.TemperatureScale.WARM);
+            comfortableWear = new Wear(Wear.WeatherDescription.WARM);
         } else if (feelsLikeTemp >= 17) {
-            comfortableWear = new Wear(Wear.TemperatureScale.MODERATE);
+            comfortableWear = new Wear(Wear.WeatherDescription.MODERATE);
         } else if (feelsLikeTemp >= 13) {
-            comfortableWear = new Wear(Wear.TemperatureScale.COOL);
+            comfortableWear = new Wear(Wear.WeatherDescription.COOL);
         } else if (feelsLikeTemp >= 8) {
-            comfortableWear = new Wear(Wear.TemperatureScale.CHILLY);
+            comfortableWear = new Wear(Wear.WeatherDescription.CHILLY);
         } else if (feelsLikeTemp >= 1) {
-            comfortableWear = new Wear(Wear.TemperatureScale.COLD);
+            comfortableWear = new Wear(Wear.WeatherDescription.COLD);
         } else {
-            comfortableWear = new Wear(Wear.TemperatureScale.FREEZING);
+            comfortableWear = new Wear(Wear.WeatherDescription.FREEZING);
         }
         return comfortableWear;
     }
