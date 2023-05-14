@@ -21,6 +21,7 @@ import java.time.LocalDate;
 @Validated
 public class RecommendationController {
     private final RecommendationService service;
+
     @GetMapping(path = "/walk")
     ResponseEntity<Walk> getWalkRecommendation(
             @RequestParam(name = "latitude") @NotBlank String latitude,
@@ -38,6 +39,6 @@ public class RecommendationController {
         if (LocalDate.now().plusDays(11).isBefore(date)) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(service.getComfortableWear(date, latitude, longitude));
+        return ResponseEntity.ok(service.getWearRecommendation(date, latitude, longitude));
     }
 }

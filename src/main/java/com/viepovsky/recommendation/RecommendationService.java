@@ -98,7 +98,7 @@ public class RecommendationService {
         return scale;
     }
 
-    public Wear getComfortableWear(LocalDate date, String latitude, String longitude) {
+    public Wear getWearRecommendation(LocalDate date, String latitude, String longitude) {
         List<ForecastWeather> forecast;
         URI url = UriComponentsBuilder
                 .fromHttpUrl("http://localhost:8080/city-weather-app/weather/forecast")
