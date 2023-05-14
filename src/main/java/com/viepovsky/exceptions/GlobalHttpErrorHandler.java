@@ -19,4 +19,9 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException exception) {
         return new ResponseEntity<>("Date" + exception.getMessage().substring(13), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(AirQualityUnavailableException.class)
+    public ResponseEntity<Object> handleAirQualityUnavailableException(AirQualityUnavailableException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
+    }
 }

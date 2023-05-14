@@ -1,7 +1,6 @@
-package com.viepovsky.api.weather;
+package com.viepovsky.recommendation;
 
-import com.viepovsky.api.weather.dto.CurrentWeather;
-import com.viepovsky.api.weather.dto.ForecastWeather;
+import com.viepovsky.recommendation.dto.Walk;
 import com.viepovsky.recommendation.dto.Wear;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
@@ -15,29 +14,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @RestController
-@RequestMapping("/city-weather-app/weather")
+@RequestMapping("city-weather-app/recommendation")
 @RequiredArgsConstructor
 @Validated
-class WeatherController {
-    private final WeatherService service;
-
-    @GetMapping
-    ResponseEntity<CurrentWeather> getWeather(
+public class RecommendationController {
+    private final RecommendationService service;
+    @GetMapping(path = "/walk")
+    ResponseEntity<Walk> getWalkRecommendation(
             @RequestParam(name = "latitude") @NotBlank String latitude,
             @RequestParam(name = "longitude") @NotBlank String longitude
     ) {
-        return ResponseEntity.ok(service.fetchCurrentWeather(latitude, longitude));
+        return ResponseEntity.ok(service.getWalkRecommendation(latitude, longitude));
     }
 
-    @GetMapping(path = "/forecast")
-    ResponseEntity<List<ForecastWeather>> getForecast(
+    @GetMapping(path = "/wear")
+    ResponseEntity<Wear> getWearRecommendation(
+            @RequestParam @FutureOrPresent @NotNull LocalDate date,
             @RequestParam(name = "latitude") @NotBlank String latitude,
             @RequestParam(name = "longitude") @NotBlank String longitude
     ) {
-        return ResponseEntity.ok(service.fetchForecastWeather(latitude, longitude));
+        if (LocalDate.now().plusDays(11).isBefore(date)) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(service.getComfortableWear(date, latitude, longitude));
     }
 }
-

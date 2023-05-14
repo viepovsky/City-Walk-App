@@ -1,7 +1,7 @@
 package com.viepovsky.api.airquality;
 
 import com.viepovsky.api.airquality.dto.AirQuality;
-import com.viepovsky.api.airquality.dto.Walk;
+import com.viepovsky.exceptions.AirQualityUnavailableException;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,17 +18,9 @@ class AirQualityController {
 
     @GetMapping
     ResponseEntity<AirQuality> getAirQuality(
-            @RequestParam(name = "country-code") @NotBlank String code,
-            @RequestParam(name = "city") @NotBlank String name
-    ) {
-        return ResponseEntity.ok(service.getAirQuality(code, name));
-    }
-
-    @GetMapping(path = "/walk-recommendation")
-    ResponseEntity<Walk> getWalkRecommendation(
-            @RequestParam(name = "country-code") @NotBlank String code,
-            @RequestParam(name = "city") @NotBlank String name
-    ) {
-        return ResponseEntity.ok(service.getWalkRecommendation(code, name));
+            @RequestParam(name = "latitude") @NotBlank String latitude,
+            @RequestParam(name = "longitude") @NotBlank String longitude
+    ) throws AirQualityUnavailableException {
+        return ResponseEntity.ok(service.getAirQuality(latitude, longitude));
     }
 }

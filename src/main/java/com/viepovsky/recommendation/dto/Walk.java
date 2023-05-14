@@ -1,4 +1,4 @@
-package com.viepovsky.api.airquality.dto;
+package com.viepovsky.recommendation.dto;
 
 import lombok.Getter;
 

@@ -1,6 +1,7 @@
 package com.viepovsky.api.airquality;
 
 import com.viepovsky.api.airquality.dto.AirQuality;
+import com.viepovsky.exceptions.AirQualityUnavailableException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -38,7 +39,7 @@ class AirQualityClientTest {
     }
 
     @Test
-    void should_fetch_airquality() throws URISyntaxException {
+    void should_fetch_airquality() throws URISyntaxException, AirQualityUnavailableException {
         //Given
         var airQuality = new AirQuality();
         HttpHeaders headers = new HttpHeaders();

@@ -1,4 +1,4 @@
-package com.viepovsky.api.weather.dto;
+package com.viepovsky.recommendation.dto;
 
 import lombok.Getter;
 

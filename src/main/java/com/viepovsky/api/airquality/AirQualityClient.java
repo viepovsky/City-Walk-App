@@ -1,12 +1,11 @@
 package com.viepovsky.api.airquality;
 
 import com.viepovsky.api.airquality.dto.AirQuality;
+import com.viepovsky.exceptions.AirQualityUnavailableException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -19,7 +18,7 @@ class AirQualityClient {
     private final RestTemplate restTemplate;
     private final AirQualityConfig config;
 
-    AirQuality fetchAirQuality(String latitude, String longitude) {
+    AirQuality fetchAirQuality(String latitude, String longitude) throws AirQualityUnavailableException {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-RapidAPI-Key", config.getAirQualityApiKey());
         headers.set("X-RapidAPI-Host", config.getAirQualityApiHost());
@@ -31,8 +30,22 @@ class AirQualityClient {
                 .queryParam("lon", longitude)
                 .build()
                 .toUri();
+        int maxTries = 10, tryCount = 0;
+        while (tryCount < maxTries) {
+            try {
+                ResponseEntity<AirQuality> response = restTemplate.exchange(url, HttpMethod.GET, request, AirQuality.class);
+                return Optional.ofNullable(response.getBody()).orElse(new AirQuality());
+            } catch (HttpStatusCodeException e) {
+                if (e.getStatusCode() == HttpStatus.BAD_GATEWAY) {
+                    if (++tryCount == maxTries) {
+                        throw new AirQualityUnavailableException("API: " + config.getAirQualityApiEndpoint() + " is not available.");
+                    }
+                } else {
+                    throw e;
+                }
+            }
 
-        ResponseEntity<AirQuality> response = restTemplate.exchange(url, HttpMethod.GET, request, AirQuality.class);
-        return Optional.ofNullable(response.getBody()).orElse(new AirQuality());
+        }
+        return new AirQuality();
     }
 }
