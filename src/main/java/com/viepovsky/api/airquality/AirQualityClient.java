@@ -3,6 +3,8 @@ package com.viepovsky.api.airquality;
 import com.viepovsky.api.airquality.dto.AirQuality;
 import com.viepovsky.exceptions.AirQualityUnavailableException;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
@@ -15,6 +17,7 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 class AirQualityClient {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AirQualityClient.class);
     private final RestTemplate restTemplate;
     private final AirQualityConfig config;
 
@@ -37,6 +40,7 @@ class AirQualityClient {
                 return Optional.ofNullable(response.getBody()).orElse(new AirQuality());
             } catch (HttpStatusCodeException e) {
                 if (e.getStatusCode() == HttpStatus.BAD_GATEWAY) {
+                    LOGGER.warn("API: " + config.getAirQualityApiEndpoint() + " not responding.");
                     if (++tryCount == maxTries) {
                         throw new AirQualityUnavailableException("API: " + config.getAirQualityApiEndpoint() + " is not available.");
                     }
@@ -44,7 +48,6 @@ class AirQualityClient {
                     throw e;
                 }
             }
-
         }
         return new AirQuality();
     }

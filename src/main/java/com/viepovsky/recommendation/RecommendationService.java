@@ -30,28 +30,16 @@ public class RecommendationService {
 
     public Walk getWalkRecommendation(String latitude, String longitude) {
         AirQuality airQuality = null;
-        URI url = UriComponentsBuilder
-                .fromHttpUrl("http://localhost:8080/city-weather-app/airquality")
-                .queryParam("latitude", latitude)
-                .queryParam("longitude", longitude)
-                .encode()
-                .build()
-                .toUri();
+        URI url = buildUri("airquality", latitude, longitude);
         try {
             ResponseEntity<AirQuality> response = restTemplate.getForEntity(url, AirQuality.class);
             airQuality = response.getBody();
         } catch (HttpClientErrorException e) {
             LOGGER.error(e.getMessage());
         }
-        CurrentWeather weather;
-        url = UriComponentsBuilder
-                .fromHttpUrl("http://localhost:8080/city-weather-app/weather")
-                .queryParam("latitude", latitude)
-                .queryParam("longitude", longitude)
-                .encode()
-                .build()
-                .toUri();
 
+        CurrentWeather weather;
+        url = buildUri("weather", latitude, longitude);
         try {
             ResponseEntity<CurrentWeather> response = restTemplate.getForEntity(url, CurrentWeather.class);
             weather = response.getBody();
@@ -59,12 +47,24 @@ public class RecommendationService {
             LOGGER.error(e.getMessage());
             throw new WrongArgumentException(e.getMessage().substring(4));
         }
+
         if (Optional.ofNullable(airQuality).isEmpty() || Optional.ofNullable(weather).isEmpty()) {
             throw new HttpClientErrorException(HttpStatus.SERVICE_UNAVAILABLE);
         }
+
         Walk.AirQualityIndexScale aqiScale = retrieveAirQualityIndexScale(airQuality.getOverallAqi());
         Walk.UvIndexScale uvIndexScale = retrieveUvIndexScale(weather.getUvIndex());
         return new Walk(aqiScale, uvIndexScale);
+    }
+
+    private URI buildUri(String endpoint, String latitude, String longitude) {
+        return UriComponentsBuilder
+                .fromHttpUrl("http://localhost:8080/city-weather-app/" + endpoint)
+                .queryParam("latitude", latitude)
+                .queryParam("longitude", longitude)
+                .encode()
+                .build()
+                .toUri();
     }
 
     private Walk.AirQualityIndexScale retrieveAirQualityIndexScale(String overallAqi) {
@@ -100,27 +100,30 @@ public class RecommendationService {
 
     public Wear getWearRecommendation(LocalDate date, String latitude, String longitude) {
         List<ForecastWeather> forecast;
-        URI url = UriComponentsBuilder
-                .fromHttpUrl("http://localhost:8080/city-weather-app/weather/forecast")
-                .queryParam("latitude", latitude)
-                .queryParam("longitude", longitude)
-                .encode()
-                .build()
-                .toUri();
-
+        URI url = buildUri("weather/forecast", latitude, longitude);
         try {
             ForecastWeather[] forecasts = restTemplate.getForObject(url, ForecastWeather[].class);
             forecast = Arrays.asList(forecasts);
-        } catch (HttpClientErrorException e) {
-            LOGGER.error(e.getMessage());
-            throw new WrongArgumentException(e.getMessage().substring(4));
+        } catch (HttpClientErrorException exception) {
+            LOGGER.error(exception.getMessage());
+            throw exception;
         }
-        ForecastWeather weather = forecast.stream()
+        ForecastWeather weather = getForecastWeatherForGivenDate(forecast, date);
+        Wear comfortableWear = calculateComfortableWear(weather);
+        changeWearIfRains(weather, comfortableWear);
+        return comfortableWear;
+    }
+
+    private ForecastWeather getForecastWeatherForGivenDate(List<ForecastWeather> forecast, LocalDate date) {
+        return forecast.stream()
                 .filter(w -> w.getDate().isEqual(date))
                 .findFirst()
-                .get();
-        Wear comfortableWear;
+                .orElse(new ForecastWeather());
+    }
+
+    private Wear calculateComfortableWear(ForecastWeather weather) {
         int feelsLikeTemp = (int) Math.round(weather.getMaxTemp() * 0.75 + weather.getMinTemp() * 0.25);
+        Wear comfortableWear;
         if (feelsLikeTemp >= 40) {
             comfortableWear = new Wear(Wear.TemperatureScale.SCORCHING_HOT);
         } else if (feelsLikeTemp >= 30) {
@@ -138,11 +141,14 @@ public class RecommendationService {
         } else {
             comfortableWear = new Wear(Wear.TemperatureScale.FREEZING);
         }
+        return comfortableWear;
+    }
+
+    private void changeWearIfRains(ForecastWeather weather, Wear comfortableWear) {
         if (weather.getPrecipationAccumulated() >= 0.5 && weather.getPrecipationPropability() > 60) {
             comfortableWear.setRainAndRainClothes();
         } else if (weather.getPrecipationAccumulated() >= 0.1 && weather.getPrecipationPropability() > 20) {
             comfortableWear.setPossibleRain();
         }
-        return comfortableWear;
     }
 }
