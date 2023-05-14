@@ -1,8 +1,7 @@
 # City Weather App
 
-The application is designed to provide users with personalized recommendations for outdoor activities and clothing based on current weather and air quality conditions in given location.
-Users can input the coordinates of their city and receive recommendations for what to wear and whether it's a good day to go outside.
-They can also retrieve information about the weather and pollution, application keeps coordinates of cities.
+The application provides users with personalized recommendations for outdoor activities and clothing based on the current weather and air quality conditions of a given location. 
+By inputting the coordinates of their city, users can receive recommendations on what to wear and whether it's a good day to go outside. The app also stores the coordinates of cities for easy access.
 
 ## Technologies
 
@@ -13,21 +12,21 @@ The application currently uses the following frameworks and technologies:
 - Lombok
 - Maven
 
-## External API used
+## External APIs
 
-At the moment, the application is using two external API:
+At the moment, the City Weather App uses two external APIs:
 
-- Air Quality API to retrieve air quality for given location.
-- Weather API to retrieve current weather and a 13-day forecast for the given location.
+- Air Quality API to retrieve air quality for a given location.
+- Weather API to retrieve the current weather and a 13-day forecast for the given location.
 
 ## How to run
 
-To start the application clone this repo and run the `CityWeatherApplication` class or type `./mvnw spring-boot:run` in your IDE terminal.
+To start the application, clone this repository and run the `CityWeatherApplication` class or type `./mvnw spring-boot:run` in your IDE terminal.
 
 ## Endpoints
 
-The application provides many endpoints, but you should start with retrieving coordinates for city.
-- `http://localhost:8080/city-weather-app/localization/city?country-code=PL&city=Kalisz` - retrieves coordinates for given country-code and city like this:
+The app provides many endpoints, but users can start by retrieving coordinates for a specific city:
+- `http://localhost:8080/city-weather-app/localization/city?country-code=PL&city=Kalisz` -  retrieves coordinates for a given country code and city in JSON format like this:
 ```json
 {
     "countryCode": "PL",
@@ -36,8 +35,8 @@ The application provides many endpoints, but you should start with retrieving co
     "longitude": "16.92993"
 }
 ```
-then you can for example check the current weather for given localization
-- `http://localhost:8080/city-weather-app/weather?latitude=52.40692&longitude=16.92993` - retrieves current weather for given coordinates like this:
+Afterward, users can check the current weather for that location:
+- `http://localhost:8080/city-weather-app/weather?latitude=52.40692&longitude=16.92993` - retrieves the current weather for the given coordinates in JSON format like this:
 ```json
 {
     "symbol": "n400",
@@ -51,8 +50,8 @@ then you can for example check the current weather for given localization
     "visibility": 10000
 }
 ```
-the main core of the app is giving recommendations, you can get walk recommendation like this
-- `http://localhost:8080/city-weather-app/walk?latitude=52.40692&longitude=16.92993` - retrieves walk recommendation for current air quality and uv index for given coordinates like this:
+The main function of the app is to provide recommendations, including walk recommendations:
+- `http://localhost:8080/city-weather-app/walk?latitude=52.40692&longitude=16.92993` -  retrieves walk recommendations for the current air quality and UV index for the given coordinates in JSON format like this:
 ```json
 {
     "recommendation": "RECOMMENDED",
@@ -60,8 +59,8 @@ the main core of the app is giving recommendations, you can get walk recommendat
     "uvIndexScale": "LOW"
 }
 ```
-and you can get wear recommendation like this
-- `http://localhost:8080/city-weather-app/wear?date=YYYY-MM-DD&latitude=52.40692&longitude=16.92993` - retrieves wear recommendation for current weather for given date and coordinates like this:
+and wear recommendations:
+- `http://localhost:8080/city-weather-app/wear?date=YYYY-MM-DD&latitude=52.40692&longitude=16.92993` -  retrieves wear recommendations for the current weather for the given date and coordinates in JSON format like this:
 ```json
 {
     "weatherDesc": "COOL",
@@ -73,7 +72,8 @@ and you can get wear recommendation like this
 }
 ```
 
-You can find all endpoints here:
+All endpoints can be found here:
+
 ![Swagger screenshot](src/main/resources/screenshots/swagger.JPG)
 
 ## Test coverage
