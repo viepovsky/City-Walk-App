@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @OpenAPIDefinition
-public class CityWeatherApplication {
+public class CityWalkApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CityWeatherApplication.class, args);
+        SpringApplication.run(CityWalkApplication.class, args);
     }
 
 }

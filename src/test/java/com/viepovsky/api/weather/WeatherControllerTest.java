@@ -1,6 +1,5 @@
 package com.viepovsky.api.weather;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.viepovsky.api.weather.dto.CurrentWeather;
 import com.viepovsky.api.weather.dto.ForecastWeather;
@@ -36,9 +35,9 @@ class WeatherControllerTest {
         var jsonResponse = new ObjectMapper().writeValueAsString(currentWeather);
         when(service.fetchCurrentWeather(anyString(), anyString())).thenReturn(currentWeather);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/city-weather-app/weather")
-                .param("latitude", "50.22")
-                .param("longitude", "5.22"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/city-walk-app/weather")
+                        .param("latitude", "50.22")
+                        .param("longitude", "5.22"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(jsonResponse));
     }
@@ -49,7 +48,7 @@ class WeatherControllerTest {
         var jsonResponse = new ObjectMapper().writeValueAsString(forecast);
         when(service.fetchForecastWeather(anyString(), anyString())).thenReturn(forecast);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/city-weather-app/weather/forecast")
+        mockMvc.perform(MockMvcRequestBuilders.get("/city-walk-app/weather/forecast")
                         .param("latitude", "50.22")
                         .param("longitude", "5.22"))
                 .andExpect(MockMvcResultMatchers.status().isOk())

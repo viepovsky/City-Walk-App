@@ -1,4 +1,4 @@
-# City Weather App
+# City Walk App
 
 The application is designed to provide users with personalized recommendations for outdoor activities and clothing based on current weather and air quality conditions in given location.
 Users can input the coordinates of their city and receive recommendations for what to wear and whether it's a good day to go outside.
@@ -22,12 +22,12 @@ At the moment, the application is using two external API:
 
 ## How to run
 
-To start the application clone this repo and run the `CityWeatherApplication` class or type `./mvnw spring-boot:run` in your IDE terminal.
+To start the application clone this repo and run the `CityWalkApplication` class or type `./mvnw spring-boot:run` in your IDE terminal.
 
 ## Endpoints
 
 The application provides many endpoints, but you should start with retrieving coordinates for city.
-- `http://localhost:8080/city-weather-app/localization/city?country-code=PL&city=Kalisz` - retrieves coordinates for given country-code and city like this:
+- `http://localhost:8080/city-walk-app/localization/city?country-code=PL&city=Kalisz` - retrieves coordinates for given country-code and city like this:
 ```json
 {
     "countryCode": "PL",
@@ -37,7 +37,7 @@ The application provides many endpoints, but you should start with retrieving co
 }
 ```
 then you can for example check the current weather for given localization
-- `http://localhost:8080/city-weather-app/weather?latitude=52.40692&longitude=16.92993` - retrieves current weather for given coordinates like this:
+- `http://localhost:8080/city-walk-app/weather?latitude=52.40692&longitude=16.92993` - retrieves current weather for given coordinates like this:
 ```json
 {
     "symbol": "n400",
@@ -52,7 +52,7 @@ then you can for example check the current weather for given localization
 }
 ```
 the main core of the app is giving recommendations, you can get walk recommendation like this
-- `http://localhost:8080/city-weather-app/walk?latitude=52.40692&longitude=16.92993` - retrieves walk recommendation for current air quality and uv index for given coordinates like this:
+- `http://localhost:8080/city-walk-app/walk?latitude=52.40692&longitude=16.92993` - retrieves walk recommendation for current air quality and uv index for given coordinates like this:
 ```json
 {
     "recommendation": "RECOMMENDED",
@@ -61,7 +61,7 @@ the main core of the app is giving recommendations, you can get walk recommendat
 }
 ```
 and you can get wear recommendation like this
-- `http://localhost:8080/city-weather-app/wear?date=YYYY-MM-DD&latitude=52.40692&longitude=16.92993` - retrieves wear recommendation for current weather for given date and coordinates like this:
+- `http://localhost:8080/city-walk-app/wear?date=YYYY-MM-DD&latitude=52.40692&longitude=16.92993` - retrieves wear recommendation for current weather for given date and coordinates like this:
 ```json
 {
     "weatherDesc": "COOL",
