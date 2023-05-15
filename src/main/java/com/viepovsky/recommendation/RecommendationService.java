@@ -59,7 +59,7 @@ public class RecommendationService {
 
     private URI buildUri(String endpoint, String latitude, String longitude) {
         return UriComponentsBuilder
-                .fromHttpUrl("http://localhost:8080/city-weather-app/" + endpoint)
+                .fromHttpUrl("http://localhost:8080/city-walk-app/" + endpoint)
                 .queryParam("latitude", latitude)
                 .queryParam("longitude", longitude)
                 .encode()

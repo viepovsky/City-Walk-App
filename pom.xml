@@ -10,10 +10,10 @@
     </parent>
 
     <groupId>com.viepovsky</groupId>
-    <artifactId>City-Weather</artifactId>
+    <artifactId>City-Walk</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>City-Weather</name>
-    <description>City Weather App</description>
+    <name>City-Walk</name>
+    <description>City Walk App</description>
     <properties>
         <java.version>17</java.version>
     </properties>

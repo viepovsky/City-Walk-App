@@ -33,7 +33,7 @@ class AirQualityControllerTest {
         String jsonResponse = new ObjectMapper().writeValueAsString(airQuality);
         when(service.getAirQuality(anyString(), anyString())).thenReturn(airQuality);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/city-weather-app/airquality")
+        mockMvc.perform(MockMvcRequestBuilders.get("/city-walk-app/airquality")
                         .param("latitude", "50.22")
                         .param("longitude", "5.22"))
                 .andExpect(MockMvcResultMatchers.status().isOk())

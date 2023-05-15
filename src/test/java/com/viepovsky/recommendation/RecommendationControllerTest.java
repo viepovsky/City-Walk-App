@@ -35,7 +35,7 @@ class RecommendationControllerTest {
         Walk walkRecommendation = new Walk(Walk.AirQualityIndexScale.GOOD, Walk.UvIndexScale.MODERATE);
         when(service.getWalkRecommendation(anyString(), anyString())).thenReturn(walkRecommendation);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/city-weather-app/recommendation/walk")
+        mockMvc.perform(MockMvcRequestBuilders.get("/city-walk-app/recommendation/walk")
                         .param("latitude", "50.22")
                         .param("longitude", "5.22"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -47,7 +47,7 @@ class RecommendationControllerTest {
         Wear wearRecommendation = new Wear(Wear.WeatherDescription.SCORCHING_HOT);
         when(service.getWearRecommendation(any(), anyString(), anyString())).thenReturn(wearRecommendation);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/city-weather-app/recommendation/wear")
+        mockMvc.perform(MockMvcRequestBuilders.get("/city-walk-app/recommendation/wear")
                         .param("date", LocalDate.now().toString())
                         .param("latitude", "50.22")
                         .param("longitude", "5.22"))
@@ -60,7 +60,7 @@ class RecommendationControllerTest {
         Wear wearRecommendation = new Wear(Wear.WeatherDescription.SCORCHING_HOT);
         when(service.getWearRecommendation(any(), anyString(), anyString())).thenReturn(wearRecommendation);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/city-weather-app/recommendation/wear")
+        mockMvc.perform(MockMvcRequestBuilders.get("/city-walk-app/recommendation/wear")
                         .param("date", LocalDate.now().plusDays(12).toString())
                         .param("latitude", "50.22")
                         .param("longitude", "5.22"))

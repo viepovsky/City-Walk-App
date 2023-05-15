@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/city-weather-app/localization")
+@RequestMapping(path = "/city-walk-app/localization")
 @Validated
 class LocalizationController {
     private final LocalizationFacade facade;

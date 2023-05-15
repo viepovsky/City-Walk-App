@@ -1,4 +1,4 @@
-# City Weather App
+# City Walk App
 
 The application provides users with personalized recommendations for outdoor activities and clothing based on the current weather and air quality conditions of a given location. 
 By inputting the coordinates of their city, users can receive recommendations on what to wear and whether it's a good day to go outside. The app also stores the coordinates of cities for easy access.
@@ -21,12 +21,12 @@ At the moment, the City Weather App uses two external APIs:
 
 ## How to run
 
-To start the application, clone this repository and run the `CityWeatherApplication` class or type `./mvnw spring-boot:run` in your IDE terminal.
+To start the application, clone this repository and run the `CityWalkApplication` class or type `./mvnw spring-boot:run` in your IDE terminal.
 
 ## Endpoints
 
 The app provides many endpoints, but users can start by retrieving coordinates for a specific city:
-- `http://localhost:8080/city-weather-app/localization/city?country-code=PL&city=Kalisz` -  retrieves coordinates for a given country code and city in JSON format like this:
+- `http://localhost:8080/city-walk-app/localization/city?country-code=PL&city=Kalisz` -  retrieves coordinates for a given country code and city in JSON format like this:
 ```json
 {
     "countryCode": "PL",
@@ -36,7 +36,7 @@ The app provides many endpoints, but users can start by retrieving coordinates f
 }
 ```
 Afterward, users can check the current weather for that location:
-- `http://localhost:8080/city-weather-app/weather?latitude=52.40692&longitude=16.92993` - retrieves the current weather for the given coordinates in JSON format like this:
+- `http://localhost:8080/city-walk-app/weather?latitude=52.40692&longitude=16.92993` - retrieves the current weather for the given coordinates in JSON format like this:
 ```json
 {
     "symbol": "n400",
@@ -51,7 +51,7 @@ Afterward, users can check the current weather for that location:
 }
 ```
 The main function of the app is to provide recommendations, including walk recommendations:
-- `http://localhost:8080/city-weather-app/walk?latitude=52.40692&longitude=16.92993` -  retrieves walk recommendations for the current air quality and UV index for the given coordinates in JSON format like this:
+- `http://localhost:8080/city-walk-app/walk?latitude=52.40692&longitude=16.92993` -  retrieves walk recommendations for the current air quality and UV index for the given coordinates in JSON format like this:
 ```json
 {
     "recommendation": "RECOMMENDED",
@@ -60,7 +60,7 @@ The main function of the app is to provide recommendations, including walk recom
 }
 ```
 and wear recommendations:
-- `http://localhost:8080/city-weather-app/wear?date=YYYY-MM-DD&latitude=52.40692&longitude=16.92993` -  retrieves wear recommendations for the current weather for the given date and coordinates in JSON format like this:
+- `http://localhost:8080/city-walk-app/wear?date=YYYY-MM-DD&latitude=52.40692&longitude=16.92993` -  retrieves wear recommendations for the current weather for the given date and coordinates in JSON format like this:
 ```json
 {
     "weatherDesc": "COOL",

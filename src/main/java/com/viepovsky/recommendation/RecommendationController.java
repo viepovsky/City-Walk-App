@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("city-weather-app/recommendation")
+@RequestMapping("city-walk-app/recommendation")
 @RequiredArgsConstructor
 @Validated
 public class RecommendationController {

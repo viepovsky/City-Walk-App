@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/city-weather-app/airquality")
+@RequestMapping(path = "/city-walk-app/airquality")
 @RequiredArgsConstructor
 class AirQualityController {
     private final AirQualityService service;

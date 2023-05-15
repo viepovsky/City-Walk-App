@@ -34,7 +34,7 @@ class LocalizationControllerTest {
         List<CountryResponse> countryResponses = List.of(new CountryResponse());
         when(facade.getCountries()).thenReturn(countryResponses);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/city-weather-app/localization/countries"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/city-walk-app/localization/countries"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
     }
@@ -44,7 +44,7 @@ class LocalizationControllerTest {
         List<CityResponse> cityResponses = List.of(new CityResponse());
         when(facade.getCities(anyString())).thenReturn(cityResponses);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/city-weather-app/localization/cities")
+        mockMvc.perform(MockMvcRequestBuilders.get("/city-walk-app/localization/cities")
                         .param("country-code", "PL"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
@@ -55,7 +55,7 @@ class LocalizationControllerTest {
         var city = new CityResponse();
         when(facade.getCity(anyString(), anyString())).thenReturn(city);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/city-weather-app/localization/city")
+        mockMvc.perform(MockMvcRequestBuilders.get("/city-walk-app/localization/city")
                         .param("country-code", "PL")
                         .param("city", "Poznań"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
