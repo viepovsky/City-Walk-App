@@ -14,7 +14,7 @@ The application currently uses the following frameworks and technologies:
 
 ## External APIs
 
-At the moment, the City Weather App uses two external APIs:
+At the moment, the City Walk App uses two external APIs:
 
 - Air Quality API to retrieve air quality for a given location.
 - Weather API to retrieve the current weather and a 13-day forecast for the given location.
