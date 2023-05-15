@@ -68,34 +68,33 @@ public class RecommendationService {
     }
 
     private Walk.AirQualityIndexScale retrieveAirQualityIndexScale(String overallAqi) {
-        Walk.AirQualityIndexScale airQualityIndexScale;
+        Walk.AirQualityIndexScale airQualityIndexScale = null;
         int aqi = Integer.parseInt(overallAqi);
-        if (aqi <= 50) {
-            airQualityIndexScale = Walk.AirQualityIndexScale.GOOD;
-        } else if (aqi <= 100) {
-            airQualityIndexScale = Walk.AirQualityIndexScale.MODERATE;
-        } else if (aqi <= 150) {
-            airQualityIndexScale = Walk.AirQualityIndexScale.UNHEALTHY_FOR_SENSITIVE_GROUPS;
-        } else if (aqi <= 200) {
-            airQualityIndexScale = Walk.AirQualityIndexScale.UNHEALTHY;
-        } else if (aqi <= 300) {
-            airQualityIndexScale = Walk.AirQualityIndexScale.VERY_UNHEALTHY;
-        } else {
-            airQualityIndexScale = Walk.AirQualityIndexScale.HAZARDOUS;
+        List<Integer> thresholdValues = List.of(50, 100, 150, 200, 300);
+        List<Walk.AirQualityIndexScale> scales = List.of(
+                Walk.AirQualityIndexScale.GOOD,
+                Walk.AirQualityIndexScale.MODERATE,
+                Walk.AirQualityIndexScale.UNHEALTHY_FOR_SENSITIVE_GROUPS,
+                Walk.AirQualityIndexScale.UNHEALTHY,
+                Walk.AirQualityIndexScale.VERY_UNHEALTHY
+        );
+        for (int i = 0; i < thresholdValues.size(); i++) {
+            if (aqi <= thresholdValues.get(i)) {
+                airQualityIndexScale = scales.get(i);
+                break;
+            }
         }
-        return airQualityIndexScale;
+        return Optional.ofNullable(airQualityIndexScale).orElse(Walk.AirQualityIndexScale.HAZARDOUS);
     }
 
     private Walk.UvIndexScale retrieveUvIndexScale(int uvIndex) {
-        Walk.UvIndexScale scale;
-        switch (uvIndex) {
-            case 0, 1, 2 -> scale = Walk.UvIndexScale.LOW;
-            case 3, 4, 5 -> scale = Walk.UvIndexScale.MODERATE;
-            case 6, 7 -> scale = Walk.UvIndexScale.HIGH;
-            case 8, 9, 10 -> scale = Walk.UvIndexScale.VERY_HIGH;
-            default -> scale = Walk.UvIndexScale.EXTREME;
-        }
-        return scale;
+        return switch (uvIndex) {
+            case 0, 1, 2 -> Walk.UvIndexScale.LOW;
+            case 3, 4, 5 -> Walk.UvIndexScale.MODERATE;
+            case 6, 7 -> Walk.UvIndexScale.HIGH;
+            case 8, 9, 10 -> Walk.UvIndexScale.VERY_HIGH;
+            default -> Walk.UvIndexScale.EXTREME;
+        };
     }
 
     public Wear getWearRecommendation(LocalDate date, String latitude, String longitude) {
@@ -123,25 +122,24 @@ public class RecommendationService {
 
     private Wear calculateComfortableWear(ForecastWeather weather) {
         int feelsLikeTemp = (int) Math.round(weather.getMaxTemp() * 0.75 + weather.getMinTemp() * 0.25);
-        Wear comfortableWear;
-        if (feelsLikeTemp >= 40) {
-            comfortableWear = new Wear(Wear.WeatherDescription.SCORCHING_HOT);
-        } else if (feelsLikeTemp >= 30) {
-            comfortableWear = new Wear(Wear.WeatherDescription.HOT);
-        } else if (feelsLikeTemp >= 23) {
-            comfortableWear = new Wear(Wear.WeatherDescription.WARM);
-        } else if (feelsLikeTemp >= 17) {
-            comfortableWear = new Wear(Wear.WeatherDescription.MODERATE);
-        } else if (feelsLikeTemp >= 13) {
-            comfortableWear = new Wear(Wear.WeatherDescription.COOL);
-        } else if (feelsLikeTemp >= 8) {
-            comfortableWear = new Wear(Wear.WeatherDescription.CHILLY);
-        } else if (feelsLikeTemp >= 1) {
-            comfortableWear = new Wear(Wear.WeatherDescription.COLD);
-        } else {
-            comfortableWear = new Wear(Wear.WeatherDescription.FREEZING);
+        Wear comfortableWear = null;
+        List<Integer> thresholdValues = List.of(40, 30, 23, 17, 13, 8, 1);
+        List<Wear.WeatherDescription> scales = List.of(
+                Wear.WeatherDescription.SCORCHING_HOT,
+                Wear.WeatherDescription.HOT,
+                Wear.WeatherDescription.WARM,
+                Wear.WeatherDescription.MODERATE,
+                Wear.WeatherDescription.COOL,
+                Wear.WeatherDescription.CHILLY,
+                Wear.WeatherDescription.COLD
+        );
+        for (int i = 0; i < thresholdValues.size(); i++) {
+            if (feelsLikeTemp >= thresholdValues.get(i)) {
+                comfortableWear = new Wear(scales.get(i));
+                break;
+            }
         }
-        return comfortableWear;
+        return Optional.ofNullable(comfortableWear).orElse(new Wear(Wear.WeatherDescription.FREEZING));
     }
 
     private void changeWearIfRains(ForecastWeather weather, Wear comfortableWear) {

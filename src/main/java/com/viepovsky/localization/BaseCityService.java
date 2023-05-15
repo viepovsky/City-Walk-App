@@ -35,7 +35,8 @@ abstract class BaseCityService {
     }
 
     City filterByCodeAndName(String code, String name, List<City> cities) {
-        return filterByCode(code, cities).stream()
+        return cities.stream()
+                .filter(city -> city.getCountryCode().equals(code))
                 .filter(city -> city.getName().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new WrongArgumentException("Given city name does not exist."));
