@@ -2,6 +2,7 @@
 
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/viepovsky/City-Walk-App/maven.yml?style=plastic)](https://github.com/viepovsky/City-Walk-App/actions/workflows/maven.yml)
 [![Codecov test coverage](https://img.shields.io/codecov/c/github/viepovsky/City-Walk-App?style=plastic)](https://codecov.io/gh/viepovsky/City-Walk-App)
+[![Docker Image Size (tag)](https://img.shields.io/docker/image-size/viepovsky/city-walk/latest?label=docker%20image%20size&style=plastic)](https://hub.docker.com/r/viepovsky/city-walk/tags)
 
 The application provides users with personalized recommendations for outdoor activities and clothing based on the current weather and air quality conditions of a given location. 
 By inputting the coordinates of their city, users can receive recommendations on what to wear and whether it's a good day to go outside. The app also stores the coordinates of cities for easy access.
