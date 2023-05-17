@@ -26,6 +26,12 @@ At the moment, the City Walk App uses two external APIs:
 
 To start the application, clone this repository and run the `CityWalkApplication` class or type `./mvnw spring-boot:run` in your IDE terminal.
 
+Alternatively, if you have Docker installed, you can run the application in a container using the following command in your terminal or cmd:
+
+```
+docker run -d -p 8080:8080 viepovsky/city-walk
+```
+
 ## Endpoints
 
 The app provides many endpoints, but users can start by retrieving coordinates for a specific city:
