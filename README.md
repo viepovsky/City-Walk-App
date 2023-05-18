@@ -13,6 +13,7 @@ The application currently uses the following frameworks and technologies:
 
 - Spring Boot: Web, Data JPA, Test, Validation
 - Unit tests with: JUnit, Mockito
+- Docker
 - Lombok
 - Maven
 
