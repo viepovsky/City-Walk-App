@@ -81,8 +81,17 @@ and wear recommendations:
     "rain": "NO"
 }
 ```
+## Example usage - frontend
 
-All endpoints can be found here:
+Here is a simple example of how to use the application to get wear and walk information. 
+The page is hosted on GitHub Pages, and you can access it here: [viepovsky.github.io](https://viepovsky.github.io)
+
+Please note that the application is hosted on the free version of Replit, so it may be asleep until it receives a request. 
+The initial call to the API may take some time.
+
+Please also keep in mind that the application's appearance is basic, but it is fully functional.
+
+## Swagger endpoints view
 
 ![Swagger screenshot](src/main/resources/screenshots/swagger.JPG)
 
