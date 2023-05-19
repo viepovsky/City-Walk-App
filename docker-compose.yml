@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: city-walk-app
+    image: viepovsky/city-walk:latest
+    ports:
+      - "8080:8080"
