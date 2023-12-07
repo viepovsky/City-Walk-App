@@ -34,6 +34,7 @@ Alternatively, if you have Docker installed, you can run the application in a co
 docker run -d -p 8080:8080 viepovsky/city-walk
 ```
 
+You can also run app by using `docker compose up -d` in folder where `docker-compose.yml` is located.
 ## Endpoints
 
 The app provides many endpoints, but users can start by retrieving coordinates for a specific city:
