@@ -1,9 +1,9 @@
 FROM eclipse-temurin:17-alpine
 WORKDIR /app
 COPY .mvn .mvn
-COPY pom.xml pom.xml
-COPY mvnw pom.xml ./
+COPY pom.xml .
+COPY mvnw .
 RUN ./mvnw dependency:resolve
 COPY src src
-ENV TZ=Europe/Warsaw
-CMD ./mvnw spring-boot:run
+RUN ./mvnw clean package
+CMD ["java", "-jar", "/app/target/City-Walk-0.0.1-SNAPSHOT.jar"]
