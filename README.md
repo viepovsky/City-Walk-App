@@ -37,7 +37,7 @@ docker run -d -p 8080:8080 viepovsky/city-walk
 ## Endpoints
 
 The app provides many endpoints, but users can start by retrieving coordinates for a specific city:
-- `http://localhost:8080/city-walk-app/localization/city?country-code=PL&city=Kalisz` -  retrieves coordinates for a given country code and city in JSON format like this:
+- `http://localhost:8080/city-walk-app/localization/city?country-code=PL&city=Poznań` -  retrieves coordinates for a given country code and city in JSON format like this:
 ```json
 {
     "countryCode": "PL",
