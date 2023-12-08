@@ -14,7 +14,7 @@ class AirQualityService {
     private final AirQualityClient client;
 
     AirQuality getAirQuality(String latitude, String longitude) throws AirQualityUnavailableException {
-        LOGGER.info("Starting to fetch air quality.");
+        LOGGER.info("Fetching air quality for given latitude:{} and longitude:{}.", latitude, longitude);
         return client.fetchAirQuality(latitude, longitude);
     }
 }

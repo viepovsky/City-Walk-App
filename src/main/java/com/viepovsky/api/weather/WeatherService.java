@@ -19,13 +19,13 @@ class WeatherService {
     private final WeatherClient client;
 
     CurrentWeather fetchCurrentWeather(String latitude, String longitude) {
-        LOGGER.info("Starting to fetch current weather.");
+        LOGGER.info("Fetching current weather for given latitude:{} and longitude:{}.", latitude, longitude);
         Forecast forecast = client.fetchCurrentWeather(longitude, latitude);
         return Optional.ofNullable(forecast.getCurrentWeather()).orElse(new CurrentWeather());
     }
 
     List<ForecastWeather> fetchForecastWeather(String latitude, String longitude) {
-        LOGGER.info("Starting to fetch forecast.");
+        LOGGER.info("Fetching forecast for given latitude:{} and longitude:{}.", latitude, longitude);
         Forecast forecast = client.fetchForecastWeather(longitude, latitude);
         return Optional.ofNullable(forecast.getForecastWeathers()).orElse(new ArrayList<>());
     }

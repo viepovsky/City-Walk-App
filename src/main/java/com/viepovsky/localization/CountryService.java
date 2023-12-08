@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
 @Service
 class CountryService {
-    private static final Logger logger = LoggerFactory.getLogger(CountryService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CountryService.class);
     private static CountryService instance;
     private List<Country> countries;
 
@@ -38,7 +40,7 @@ class CountryService {
             Country[] countryTable = mapper.readValue(file, Country[].class);
             countries = Arrays.asList(countryTable);
         } catch (IOException e) {
-            logger.error("Could not get countries.");
+            LOGGER.error("Could not retrieve countries from countries.json.");
         }
     }
 }

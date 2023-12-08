@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 abstract class BaseCityService {
-    private static final Logger logger = LoggerFactory.getLogger(BaseCityService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseCityService.class);
 
     List<City> loadFromJson(File file) {
         List<City> cities = new ArrayList<>();
@@ -23,7 +23,7 @@ abstract class BaseCityService {
             City[] citiesTable = mapper.readValue(file, City[].class);
             cities = Arrays.asList(citiesTable);
         } catch (IOException e) {
-            logger.error("Could not get cities.");
+            LOGGER.error("Could not retrieve cities from:{}", file.getPath());
         }
         return cities;
     }
@@ -39,6 +39,6 @@ abstract class BaseCityService {
                 .filter(city -> city.getCountryCode().equals(code))
                 .filter(city -> city.getName().equals(name))
                 .findFirst()
-                .orElseThrow(() -> new WrongArgumentException("Given city name does not exist."));
+                .orElseThrow(() -> new WrongArgumentException("Given city name:" + name + " does not exist."));
     }
 }

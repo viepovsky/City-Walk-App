@@ -40,9 +40,11 @@ class AirQualityClient {
                 return Optional.ofNullable(response.getBody()).orElse(new AirQuality());
             } catch (HttpStatusCodeException e) {
                 if (e.getStatusCode() == HttpStatus.BAD_GATEWAY) {
-                    LOGGER.warn("API: " + config.getAirQualityApiEndpoint() + " not responding.");
+                    LOGGER.warn("API:{} is not responding.", config.getAirQualityApiEndpoint());
                     if (++tryCount == maxTries) {
                         throw new AirQualityUnavailableException("API: " + config.getAirQualityApiEndpoint() + " is not available.");
+                    } else {
+                        LOGGER.warn("Trying to fetch data again, tries count:{}", tryCount);
                     }
                 } else {
                     throw e;
