@@ -35,6 +35,13 @@ docker run -d -p 8080:8080 viepovsky/city-walk
 ```
 
 You can also run app by using `docker compose up -d` in folder where `docker-compose.yml` is located.
+
+## Deployment
+
+The app is deployed to AWS EC2. It is accessible under IP address: `3.72.88.245`.
+
+You can always test it, just replace localhost with this IP address in examples shown below.
+
 ## Endpoints
 
 The app provides many endpoints, but users can start by retrieving coordinates for a specific city:

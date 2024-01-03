@@ -30,3 +30,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+AWS
+*.pem
+DEPLOY_TO_AWS.md
