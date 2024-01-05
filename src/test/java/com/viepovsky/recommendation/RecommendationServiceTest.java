@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -33,6 +34,9 @@ class RecommendationServiceTest {
     @Mock
     private RestTemplate restTemplate;
 
+    @Mock
+    private RecommendationConfig config;
+
     @Test
     void should_get_walk_recommendation() {
         var airQuality = new AirQuality();
@@ -44,6 +48,7 @@ class RecommendationServiceTest {
         weather.setUvIndex(2);
         var weatherResponseEntity = new ResponseEntity<>(weather, HttpStatus.OK);
         when(restTemplate.getForEntity(any(), eq(CurrentWeather.class))).thenReturn(weatherResponseEntity);
+        when(config.getServerUrl()).thenReturn("http://localhost:8080");
 
         var walkRecommendation = service.getWalkRecommendation("50", "20");
 
@@ -62,6 +67,7 @@ class RecommendationServiceTest {
         forecasts[0].setPrecipationAccumulated(0.01);
         forecasts[0].setPrecipationPropability(10);
         when(restTemplate.getForObject(any(), eq(ForecastWeather[].class))).thenReturn(forecasts);
+        when(config.getServerUrl()).thenReturn("http://localhost:8080");
 
         var wearRecommendation = service.getWearRecommendation(date, "50", "20");
 

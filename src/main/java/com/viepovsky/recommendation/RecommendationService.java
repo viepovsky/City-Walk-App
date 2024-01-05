@@ -27,6 +27,7 @@ import java.util.Optional;
 public class RecommendationService {
     private static final Logger LOGGER = LoggerFactory.getLogger(RecommendationService.class);
     private final RestTemplate restTemplate;
+    private final RecommendationConfig config;
 
     public Walk getWalkRecommendation(String latitude, String longitude) {
         AirQuality airQuality = null;
@@ -59,7 +60,7 @@ public class RecommendationService {
 
     private URI buildUri(String endpoint, String latitude, String longitude) {
         return UriComponentsBuilder
-                .fromHttpUrl("http://localhost:8080/city-walk-app/" + endpoint)
+                .fromHttpUrl(config.getServerUrl() + "/city-walk-app/" + endpoint)
                 .queryParam("latitude", latitude)
                 .queryParam("longitude", longitude)
                 .encode()
